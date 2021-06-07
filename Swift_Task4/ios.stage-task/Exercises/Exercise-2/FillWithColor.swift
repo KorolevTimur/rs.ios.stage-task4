@@ -1,12 +1,6 @@
 import Foundation
 
 final class FillWithColor {
-    struct Pixel: Equatable {
-        let row: Int
-        let column: Int
-    }
-    
-    var array = [Pixel]()
     
     func fillWithColor(_ image: [[Int]], _ row: Int, _ column: Int, _ newColor: Int) -> [[Int]] {
         if !image.isEmpty {
@@ -17,29 +11,21 @@ final class FillWithColor {
                 column >= n || image[row][column] == newColor) {
                 return image
             } else {
-                array.append(Pixel(row: row, column: column))
                 let oldColor = image[row][column]
                 var outputImage = image
                 outputImage[row][column] = newColor
+                
                 if (row - 1 >= 0 && image[row - 1][column] == oldColor) {
-                    if !array.contains(Pixel(row: row - 1, column: column)) {
-                        outputImage = fillWithColor(outputImage, row - 1, column, newColor)
-                    }
+                    outputImage = fillWithColor(outputImage, row - 1, column, newColor)
                 }
                 if (row + 1 < m && image[row + 1][column] == oldColor) {
-                    if !array.contains(Pixel(row: row + 1, column: column)) {
-                        outputImage = fillWithColor(outputImage, row + 1, column, newColor)
-                    }
+                    outputImage = fillWithColor(outputImage, row + 1, column, newColor)
                 }
                 if (column - 1 >= 0 && image[row][column - 1] == oldColor) {
-                    if !array.contains(Pixel(row: row, column: column - 1)) {
-                        outputImage = fillWithColor(outputImage, row, column - 1, newColor)
-                    }
+                    outputImage = fillWithColor(outputImage, row, column - 1, newColor)
                 }
                 if (column + 1 < n && image[row][column + 1] == oldColor) {
-                    if !array.contains(Pixel(row: row, column: column + 1)) {
-                        outputImage = fillWithColor(outputImage, row, column + 1, newColor)
-                    }
+                    outputImage = fillWithColor(outputImage, row, column + 1, newColor)
                 }
                 return outputImage
             }
